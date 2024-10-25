@@ -1,0 +1,22 @@
+/* src/components/VoiceVideoButtons.css */
+
+.voice-video-buttons {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.voice-video-buttons button {
+  padding: 10px 20px;
+  margin: 0 5px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #0078d4;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+.voice-video-buttons button:hover {
+  background-color: #005fa3;
+}

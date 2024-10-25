@@ -1,31 +1,42 @@
-/* src/components/ChatInput.css */
 
+
+.chat-input input {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.chat-input button {
+  padding: 10px 20px;
+  margin-left: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #0078d4;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+.chat-input button:hover {
+  background-color: #005fa3;
+}
 .chat-input {
-    display: flex;
-    padding: 10px;
-    border-top: 1px solid #ddd;
-  }
-  
-  .chat-input input {
-    flex: 1;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .chat-input button {
-    padding: 10px 20px;
-    margin-left: 10px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #0078d4;
-    color: white;
-    border: none;
-    border-radius: 4px;
-  }
-  
-  .chat-input button:hover {
-    background-color: #005fa3;
-  }
-  
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+}
+
+.chat-input .attachment-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.chat-input .attachment-button:hover {
+  color: #0078d4;
+}
