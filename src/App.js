@@ -94,7 +94,7 @@ function App() {
     <div className="app-container">
       {!isChatOpen && (
         <div className="chatbot-icon" onClick={handleChatIconClick}>
-          <img src="/chatbot-icon.png" alt="Chatbot Icon" />
+          <img src="robo chat icon for home screen.webp" alt="Chatbot Icon" />
         </div>
       )}
 

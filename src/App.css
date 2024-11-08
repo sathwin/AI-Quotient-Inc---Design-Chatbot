@@ -19,8 +19,8 @@
 .chat-app {
   display: flex;
   flex-direction: column;
-  height: 80vh;
-  width: 400px;
+  height: 800px; /* Increased height */
+  width: 700px;  /* Increased width */
   position: fixed;
   bottom: 80px;
   right: 20px;

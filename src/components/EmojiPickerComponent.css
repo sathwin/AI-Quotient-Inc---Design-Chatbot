@@ -1,21 +1,21 @@
-/* EmojiPickerComponent.css */
+/* src/components/EmojiPickerComponent.css */
+
 .emoji-picker {
-    position: relative;
-    display: inline-block;
-    margin-right: 10px;
-  }
-  
-  .emoji-picker button {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    font-size: 24px; /* Increase size for better visibility */
-  }
-  
-  .emoji-picker .emoji-picker-react {
-    position: absolute;
-    bottom: 50px; /* Adjust as needed */
-    left: 0;
-    z-index: 1;
-  }
-  
+  position: relative;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.emoji-picker button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.emoji-picker .emoji-picker-react {
+  position: absolute;
+  bottom: 50px;
+  right: 0; /* Align to the right */
+  z-index: 1;
+}
