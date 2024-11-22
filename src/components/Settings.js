@@ -1,9 +1,9 @@
-// src/components/Settings.js
+// components/Settings.js
 
 import React from 'react';
 import './Settings.css';
 
-function Settings({ onClose }) {
+const Settings = ({ onClose }) => {
   return (
     <div className="settings-modal">
       <div className="settings-content">
@@ -18,6 +18,6 @@ function Settings({ onClose }) {
       </div>
     </div>
   );
-}
+};
 
 export default Settings;

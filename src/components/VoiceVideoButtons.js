@@ -1,6 +1,7 @@
-// src/components/VoiceVideoButtons.js
+// components/VoiceVideoButtons.js
+
 import React from 'react';
-import './VoiceVideoButtons.css';  // This line should be at the top of VoiceVideoButtons.js
+import './VoiceVideoButtons.css';
 
 const VoiceVideoButtons = () => {
   return (

@@ -1,17 +1,17 @@
-/* src/components/Header.css */
+/* components/Header.css */
 
 .chat-header {
   display: flex;
   align-items: center;
   padding: 10px;
-  background-color: #A5D6A7; /* Light green color */
+  background-color: #4caf50; /* Green color */
   color: white;
   position: relative;
 }
 
 .chat-header h2 {
   margin-left: 10px;
-  font-size: 24px;
+  font-size: 18px;
   flex-grow: 1;
 }
 

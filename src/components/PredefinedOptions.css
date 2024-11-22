@@ -1,22 +1,21 @@
-/* PredefinedOptions.css */
+/* components/PredefinedOptions.css */
 
 .predefined-options {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 10px;
-  }
-  
-  .option-button {
-    background-color: #0078d4;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    padding: 10px 15px;
-    margin: 5px;
-    cursor: pointer;
-  }
-  
-  .option-button:hover {
-    background-color: #005fa3;
-  }
-  
+  display: flex;
+  flex-wrap: wrap;
+  margin: 10px;
+}
+
+.option-button {
+  background-color: #4caf50; /* Green color */
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 15px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.option-button:hover {
+  background-color: #388e3c;
+}

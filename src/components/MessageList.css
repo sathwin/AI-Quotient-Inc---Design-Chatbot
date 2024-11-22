@@ -1,45 +1,44 @@
-/* src/components/MessageList.css */
+/* components/MessageList.css */
 
 .message-list {
-    flex: 1;
-    padding: 10px;
-    overflow-y: auto;
-    background-color: #f1f1f1;
-  }
-  
-  .message {
-    max-width: 70%;
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 10px;
-    position: relative;
-    word-wrap: break-word;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .message.sent {
-    background-color: #0078d4;
-    color: white;
-    align-self: flex-end;
-    margin-left: auto;
-    border-bottom-right-radius: 0;
-  }
-  
-  .message.received {
-    background-color: #e5e5ea;
-    color: black;
-    align-self: flex-start;
-    border-bottom-left-radius: 0;
-  }
-  
-  .message-text {
-    margin-bottom: 5px;
-  }
-  
-  .timestamp {
-    font-size: 0.8em;
-    color: #000000;
-    align-self: flex-end;
-  }
-  
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  background-color: #f1f1f1;
+}
+
+.message {
+  max-width: 70%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  position: relative;
+  word-wrap: break-word;
+  display: flex;
+  flex-direction: column;
+}
+
+.message.sent {
+  background-color: #0078d4;
+  color: white;
+  align-self: flex-end;
+  margin-left: auto;
+  border-bottom-right-radius: 0;
+}
+
+.message.received {
+  background-color: #e5e5ea;
+  color: black;
+  align-self: flex-start;
+  border-bottom-left-radius: 0;
+}
+
+.message-text {
+  margin-bottom: 5px;
+}
+
+.timestamp {
+  font-size: 0.8em;
+  color: #000000;
+  align-self: flex-end;
+}

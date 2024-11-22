@@ -1,4 +1,4 @@
-// src/components/Avatar.js
+// components/Avatar.js
 
 import React from 'react';
 import './Avatar.css';

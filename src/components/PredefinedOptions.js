@@ -1,4 +1,4 @@
-// src/components/PredefinedOptions.js
+// components/PredefinedOptions.js
 
 import React from 'react';
 import './PredefinedOptions.css';

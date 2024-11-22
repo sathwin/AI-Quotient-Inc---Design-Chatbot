@@ -1,4 +1,4 @@
-// src/components/MessageList.js
+// components/MessageList.js
 
 import React from 'react';
 import './MessageList.css';

@@ -1,19 +1,21 @@
-import React, { useState } from 'react';
-import { FaPaperclip } from 'react-icons/fa'; // Add this line
-import EmojiPickerComponent from './EmojiPickerComponent';
+// components/ChatInput.js
+
+import React from 'react';
+import EmojiPicker from 'emoji-picker-react';
 import './ChatInput.css';
 
-const ChatInput = ({ onSend }) => {
-  const [message, setMessage] = useState('');
-
-  const handleAttachmentClick = () => {
-    // Implement attachment functionality
-  };
-
+const ChatInput = ({
+  onSend,
+  message,
+  setMessage,
+  showEmojiPicker,
+  setShowEmojiPicker,
+  onEmojiClick,
+}) => {
   const handleSendClick = () => {
     if (message.trim() !== '') {
       onSend(message);
-      setMessage(''); // Clear the input after sending
+      setMessage('');
     }
   };
 
@@ -23,15 +25,19 @@ const ChatInput = ({ onSend }) => {
     }
   };
 
-  const handleEmojiSelect = (emoji) => {
-    setMessage((prevMessage) => prevMessage + emoji); // Append emoji to the message input
-  };
-
   return (
     <div className="chat-input">
-      <button onClick={handleAttachmentClick} className="attachment-button">
-        <FaPaperclip />
+      <button
+        className="emoji-button"
+        onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+      >
+        😊
       </button>
+      {showEmojiPicker && (
+        <div className="emoji-picker">
+          <EmojiPicker onEmojiClick={onEmojiClick} />
+        </div>
+      )}
       <input
         type="text"
         value={message}
@@ -39,7 +45,6 @@ const ChatInput = ({ onSend }) => {
         onKeyPress={handleEnterKey}
         placeholder="Type your message..."
       />
-      <EmojiPickerComponent onEmojiSelect={handleEmojiSelect} /> {/* Pass emoji handler */}
       <button onClick={handleSendClick}>Send</button>
     </div>
   );

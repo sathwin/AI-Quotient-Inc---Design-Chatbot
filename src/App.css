@@ -1,45 +1,159 @@
-/* src/App.css */
+/* App.css */
 
-.app-container {
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  line-height: 1.6;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Header Styles */
+header {
+  background: linear-gradient(135deg, #7f1146, #c12872);
+  color: white;
+  text-align: center;
+  padding: 2rem 1rem;
   position: relative;
 }
 
-.chatbot-icon {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  cursor: pointer;
+header img {
+  max-width: 120px;
+  margin-bottom: 1rem;
 }
 
-.chatbot-icon img {
-  width: 60px;
-  height: 60px;
+header h1 {
+  font-family: 'Lora', serif;
+  font-size: 2.5rem;
 }
 
-.chat-app {
+header p {
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+
+/* Navigation Styles */
+nav {
   display: flex;
-  flex-direction: column;
-  height: 800px; /* Increased height */
-  width: 700px;  /* Increased width */
-  position: fixed;
-  bottom: 80px;
-  right: 20px;
+  justify-content: center;
+  background: #333;
+  padding: 1rem;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin: 0 1rem;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: #c12872;
+}
+
+/* Hero Section Styles */
+.hero {
+  background: url('https://lh4.googleusercontent.com/syidITk7Rm_KMn3VfB6UgvbqIJVXveLkfa0QcQrfeqeZzSECHDMZHOQ-GS30vrHm75yelQQctSjfnMCaSezyhd4=w16383')
+    no-repeat center center;
+  background-size: cover;
+  color: white;
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.hero h1 {
+  font-family: 'Lora', serif;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.cta-button {
+  background: white;
+  color: #c12872;
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.cta-button:hover {
+  background: #c12872;
+  color: white;
+}
+
+/* Services Section Styles */
+.services,
+.about,
+.contact {
+  padding: 2rem;
+  text-align: center;
+}
+
+.services h2,
+.about h2,
+.contact h2 {
+  font-family: 'Lora', serif;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.service-card {
   border: 1px solid #ddd;
   border-radius: 8px;
-  background-color: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
-.chat-app .chat-input {
-  position: relative;
+.service-card img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin-bottom: 1rem;
 }
 
-@media (max-width: 600px) {
-  .chat-app {
-    width: 100%;
-    bottom: 0;
-    right: 0;
-    border: none;
-    border-radius: 0;
-  }
+.service-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.service-card p {
+  font-size: 1rem;
+}
+
+/* About Section Styles */
+.about p {
+  max-width: 800px;
+  margin: 0 auto 1.5rem;
+}
+
+/* Footer Styles */
+footer {
+  background: #333;
+  color: white;
+  text-align: center;
+  padding: 1.5rem 1rem;
+}
+
+footer a {
+  color: #c12872;
+  text-decoration: none;
 }
