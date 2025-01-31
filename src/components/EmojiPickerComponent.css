@@ -16,6 +16,6 @@
 .emoji-picker .emoji-picker-react {
   position: absolute;
   bottom: 50px;
-  right: 0; /* Align to the right */
+  right: 0;
   z-index: 1;
 }

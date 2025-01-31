@@ -1,44 +1,69 @@
-/* components/MessageList.css */
-
 .message-list {
   flex: 1;
   padding: 10px;
   overflow-y: auto;
-  background-color: #f1f1f1;
-}
-
-.message {
-  max-width: 70%;
-  margin-bottom: 10px;
-  padding: 10px;
-  border-radius: 10px;
-  position: relative;
-  word-wrap: break-word;
+  background-color: #fafafa;
   display: flex;
   flex-direction: column;
 }
 
-.message.sent {
+/* Each row: align user to the right, bot to the left */
+.message-row {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.message-row.user {
+  justify-content: flex-end;
+}
+
+.message-row.bot {
+  justify-content: flex-start;
+}
+
+/* The bubble containing text or images */
+.message-bubble {
+  max-width: 60%;
+  padding: 10px;
+  border-radius: 10px;
+  word-wrap: break-word;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Different colors for user vs bot bubble */
+.message-row.user .message-bubble {
   background-color: #0078d4;
-  color: white;
-  align-self: flex-end;
-  margin-left: auto;
+  color: #fff;
   border-bottom-right-radius: 0;
 }
 
-.message.received {
+.message-row.bot .message-bubble {
   background-color: #e5e5ea;
-  color: black;
-  align-self: flex-start;
+  color: #000;
   border-bottom-left-radius: 0;
 }
 
-.message-text {
-  margin-bottom: 5px;
+/* Timestamp styling */
+.timestamp {
+  display: block;
+  font-size: 0.75rem;
+  color: #555;
+  margin-top: 4px;
+  text-align: right;
 }
 
-.timestamp {
-  font-size: 0.8em;
-  color: #000000;
-  align-self: flex-end;
+/* The "Reply" link style */
+.reply-button {
+  background: transparent;
+  border: none;
+  color: #0078d4;
+  cursor: pointer;
+  font-size: 0.75rem;
+  margin-top: 4px;
+  display: block;
+  text-align: right;
+}
+
+.reply-button:hover {
+  text-decoration: underline;
 }

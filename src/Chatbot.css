@@ -1,101 +1,94 @@
 /* Chatbot.css */
 
-/* Chatbot Styles */
 .chatbot-container {
-    position: relative;
-  }
-  
-  .chatbot-icon {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    cursor: pointer;
-  }
-  
-  .chatbot-icon img {
-    width: 60px;
-    height: 60px;
-  }
-  
+  position: relative;
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+}
+
+/* Floating icon when minimized */
+.chatbot-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  cursor: pointer;
+}
+.chatbot-icon img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+/* Main chat window */
+.chat-app {
+  display: flex;
+  flex-direction: column;
+  height: 70vh;
+  width: clamp(350px, 50vw, 600px);
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  border: 1px solid #ddd;
+}
+
+/* Make it more responsive */
+@media (max-width: 600px) {
   .chat-app {
-    display: flex;
-    flex-direction: column;
-    height: 600px; /* Increased height */
-    width: 400px; /* Increased width */
-    position: fixed;
-    bottom: 80px;
-    right: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
+    width: 90vw;
+    right: 5vw;
+    bottom: 20px;
   }
-  
-  .chat-app .chat-input {
-    position: relative;
-  }
-  
-  @media (max-width: 600px) {
-    .chat-app {
-      width: 100%;
-      bottom: 0;
-      right: 0;
-      border: none;
-      border-radius: 0;
-    }
-  }
-  
-  /* Avatar Selection Styles */
-  .avatar-selection {
-    position: fixed;
-    bottom: 80px;
-    right: 20px;
-    width: 400px; /* Adjusted width */
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-  }
-  
-  .avatar-selection h3 {
-    text-align: center;
-    margin-bottom: 10px;
-  }
-  
-  .avatar-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  
-  .avatar-option {
-    width: 60px;
-    height: 60px;
-    margin: 5px;
-    cursor: pointer;
-    border-radius: 50%;
-    border: 2px solid transparent;
-  }
-  
-  .avatar-option:hover {
-    border-color: #0078d4;
-  }
-  
-  /* Change Avatar Button */
-  .change-avatar-button {
-    background-color: transparent;
-    border: none;
-    color: #0078d4;
-    cursor: pointer;
-    font-size: 14px;
-    align-self: flex-end;
-    margin: 5px;
-  }
-  
-  .change-avatar-button:hover {
-    text-decoration: underline;
-  }
-  
+}
+
+/* Avatar selection popup */
+.avatar-selection {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: clamp(300px, 40vw, 400px);
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 16px;
+  z-index: 1000;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.avatar-selection h3 {
+  margin: 0 0 10px 0;
+}
+.avatar-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.avatar-option {
+  width: 60px;
+  height: 60px;
+  margin: 5px;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.avatar-option:hover {
+  border-color: #0078d4;
+}
+
+/* Button to swap avatars once chat is open */
+.change-avatar-button {
+  background-color: transparent;
+  border: none;
+  color: #0078d4;
+  cursor: pointer;
+  font-size: 14px;
+  align-self: flex-end;
+  margin: 5px;
+}
+.change-avatar-button:hover {
+  text-decoration: underline;
+}

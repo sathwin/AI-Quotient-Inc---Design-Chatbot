@@ -1,5 +1,3 @@
-// components/ChatInput.js
-
 import React from 'react';
 import EmojiPicker from 'emoji-picker-react';
 import './ChatInput.css';
@@ -10,7 +8,6 @@ const ChatInput = ({
   setMessage,
   showEmojiPicker,
   setShowEmojiPicker,
-  onEmojiClick,
 }) => {
   const handleSendClick = () => {
     if (message.trim() !== '') {
@@ -19,33 +16,45 @@ const ChatInput = ({
     }
   };
 
-  const handleEnterKey = (e) => {
+  const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       handleSendClick();
     }
   };
 
+  // Emoji picker handling
+  const onEmojiClick = (emojiObject) => {
+    setMessage((prevMessage) => prevMessage + emojiObject.emoji);
+  };
+
   return (
     <div className="chat-input">
-      <button
-        className="emoji-button"
-        onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-      >
+      {/* Emoji button */}
+      <button className="emoji-button" onClick={() => setShowEmojiPicker(!showEmojiPicker)}>
         😊
       </button>
+
+      {/* Emoji Picker (Only shows when active) */}
       {showEmojiPicker && (
         <div className="emoji-picker">
           <EmojiPicker onEmojiClick={onEmojiClick} />
         </div>
       )}
+
+      {/* Expanding Text Input */}
       <input
         type="text"
+        placeholder="Type your message..."
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        onKeyPress={handleEnterKey}
-        placeholder="Type your message..."
+        onKeyPress={handleKeyPress}
       />
-      <button onClick={handleSendClick}>Send</button>
+
+      {/* Send Button */}
+      <button className="send-button" onClick={handleSendClick}>
+        Send
+      </button>
+
     </div>
   );
 };

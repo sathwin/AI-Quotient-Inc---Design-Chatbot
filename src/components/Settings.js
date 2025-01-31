@@ -1,5 +1,3 @@
-// components/Settings.js
-
 import React from 'react';
 import './Settings.css';
 
@@ -11,6 +9,7 @@ const Settings = ({ onClose }) => {
         <ul>
           <li>End Chat</li>
           <li>Change Color Theme</li>
+          {/* etc. */}
         </ul>
         <button className="close-button" onClick={onClose}>
           Close

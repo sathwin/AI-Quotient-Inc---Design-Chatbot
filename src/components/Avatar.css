@@ -1,5 +1,3 @@
-/* components/Avatar.css */
-
 .avatar {
   position: relative;
   display: inline-block;
@@ -11,20 +9,20 @@
   border-radius: 50%;
 }
 
-.avatar .status {
+.status {
   position: absolute;
   bottom: 5px;
   right: 5px;
-  width: 15px;
-  height: 15px;
+  width: 12px;
+  height: 12px;
   border: 2px solid white;
   border-radius: 50%;
 }
 
-.avatar .status.online {
+.online {
   background-color: green;
 }
 
-.avatar .status.offline {
+.offline {
   background-color: red;
 }

@@ -1,18 +1,16 @@
-// components/PredefinedOptions.js
-
 import React from 'react';
 import './PredefinedOptions.css';
 
 const PredefinedOptions = ({ options, onOptionSelect }) => {
   return (
     <div className="predefined-options">
-      {options.map((option, index) => (
+      {options.map((opt, idx) => (
         <button
-          key={index}
+          key={idx}
           className="option-button"
-          onClick={() => onOptionSelect(option)}
+          onClick={() => onOptionSelect(opt)}
         >
-          {option}
+          {opt}
         </button>
       ))}
     </div>

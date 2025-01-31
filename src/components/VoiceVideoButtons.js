@@ -1,5 +1,3 @@
-// components/VoiceVideoButtons.js
-
 import React from 'react';
 import './VoiceVideoButtons.css';
 

@@ -1,12 +1,14 @@
-/* components/Header.css */
-
+/* Header.css */
 .chat-header {
   display: flex;
   align-items: center;
   padding: 10px;
-  background-color: #4caf50; /* Green color */
+  /* Example: subtle gradient */
+  background: linear-gradient(135deg, #23a6d5, #23d5ab);
   color: white;
   position: relative;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 .chat-header h2 {
@@ -30,5 +32,5 @@
 }
 
 .icon-button:hover {
-  color: #005fa3;
+  color: #f2f2f2;
 }

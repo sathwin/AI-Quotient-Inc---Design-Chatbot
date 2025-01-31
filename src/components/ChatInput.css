@@ -1,47 +1,76 @@
-/* components/ChatInput.css */
-
+/* Chat Input Bar */
 .chat-input {
   display: flex;
   align-items: center;
-  padding: 10px;
+  padding: 8px;
   border-top: 1px solid #ddd;
-  position: relative;
+  background-color: #ffffff;
+  width: 100%; /* Ensure it spans the full width */
+  gap: 6px; /* Adds spacing between elements */
 }
 
-.emoji-button {
-  background-color: transparent;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  margin-right: 5px;
-}
-
-.emoji-picker {
-  position: absolute;
-  bottom: 50px;
-  left: 0;
-  z-index: 1000;
-}
-
+/* Make the input field expand to fill available space */
 .chat-input input {
-  flex: 1;
+  flex-grow: 1; /* Expands to take all available space */
   padding: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 6px;
+  outline: none;
 }
 
-.chat-input button {
-  padding: 10px 20px;
-  margin-left: 10px;
+/* Emoji Button */
+.emoji-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Send and GIF Buttons */
+.send-button, .gif-button {
+  padding: 10px 16px;
   font-size: 16px;
   cursor: pointer;
-  background-color: #4caf50; /* Green color */
-  color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.chat-input button:hover {
-  background-color: #388e3c;
+/* Send Button */
+.send-button {
+  background-color: #28a745;
+  color: white;
+}
+
+.send-button:hover {
+  background-color: #218838;
+}
+
+/* GIF Button */
+.gif-button {
+  background-color: #ffc107;
+  color: black;
+  min-width: 60px;
+}
+
+.gif-button:hover {
+  background-color: #e0a800;
+}
+
+/* Responsive Fix */
+@media (max-width: 600px) {
+  .chat-input {
+    flex-wrap: nowrap; /* Keep items in a row */
+  }
+
+  .send-button, .gif-button {
+    min-width: 60px;
+  }
 }
