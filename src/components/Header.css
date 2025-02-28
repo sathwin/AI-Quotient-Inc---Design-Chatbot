@@ -1,36 +1,216 @@
-/* Header.css */
+/* Header.css - Mental Health Version */
 .chat-header {
   display: flex;
   align-items: center;
-  padding: 10px;
-  /* Example: subtle gradient */
-  background: linear-gradient(135deg, #23a6d5, #23d5ab);
+  justify-content: space-between;
+  padding: 14px 16px;
+  /* Soothing gradient background */
+  background: linear-gradient(135deg, #4caf50, #3498db);
   color: white;
   position: relative;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+/* Dark mode adjustments with more muted colors */
+.chat-header.dark-mode {
+  background: linear-gradient(135deg, #2c682e, #1a5276);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Header left section with avatar and title */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-title {
+  display: flex;
+  flex-direction: column;
 }
 
 .chat-header h2 {
-  margin-left: 10px;
-  font-size: 18px;
-  flex-grow: 1;
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
 }
 
+.online-status {
+  font-size: 12px;
+  opacity: 0.8;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.online-status::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: #4CAF50;
+  border-radius: 50%;
+  margin-right: 4px;
+}
+
+/* Header icons section */
 .header-icons {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.icon-button {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+  margin-left: 8px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.icon-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.icon-button:active {
+  transform: translateY(0);
+}
+
+/* Emergency button styling */
+.emergency-button {
+  background-color: rgba(255, 59, 48, 0.2);
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 8px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.emergency-button:hover {
+  background-color: rgba(255, 59, 48, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Minimize button specific style */
+.minimize-button {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Header dropdown menu */
+.header-menu-button {
+  font-size: 20px;
+}
+
+.header-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  overflow: hidden;
+  width: 200px;
+  margin-top: 8px;
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dark-mode .header-menu {
+  background-color: #2a2a2a;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.header-menu button {
+  width: 100%;
+  text-align: left;
+  padding: 12px 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  transition: background-color 0.2s ease;
   display: flex;
   align-items: center;
 }
 
-.icon-button {
-  background-color: transparent;
-  border: none;
-  color: white;
-  cursor: pointer;
-  font-size: 20px;
-  margin-left: 10px;
+.header-menu button:hover {
+  background-color: #f5f5f5;
 }
 
-.icon-button:hover {
-  color: #f2f2f2;
+/* Emergency resources button in menu */
+.header-menu button:last-child {
+  border-top: 1px solid #eee;
+  color: #d32f2f;
+}
+
+.header-menu button:last-child:hover {
+  background-color: rgba(211, 47, 47, 0.1);
+}
+
+.dark-mode .header-menu button {
+  color: #e0e0e0;
+}
+
+.dark-mode .header-menu button:hover {
+  background-color: #333;
+}
+
+.dark-mode .header-menu button:last-child {
+  border-top: 1px solid #444;
+  color: #ff5252;
+}
+
+.dark-mode .header-menu button:last-child:hover {
+  background-color: rgba(211, 47, 47, 0.2);
+}
+
+.menu-icon {
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 400px) {
+  .chat-header h2 {
+    font-size: 14px;
+  }
+  
+  .icon-button, .emergency-button {
+    width: 28px;
+    height: 28px;
+    font-size: 16px;
+    margin-left: 4px;
+  }
 }

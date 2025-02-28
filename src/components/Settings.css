@@ -9,36 +9,368 @@
   justify-content: center;
   align-items: center;
   z-index: 2000;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
 }
 
 .settings-content {
   background-color: white;
-  padding: 20px;
-  border-radius: 8px;
+  padding: 24px;
+  border-radius: 12px;
+  width: 350px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  border: 1px solid #eaeaea;
+  animation: slideUp 0.3s ease-out;
 }
 
-.settings-content h3 {
-  margin-top: 0;
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.settings-content ul {
+/* Dark mode for settings */
+.settings-modal.dark-mode {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.settings-content.dark-mode {
+  background-color: #222;
+  color: #e0e0e0;
+  border: 1px solid #444;
+}
+
+/* Settings header with close button */
+.settings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #eaeaea;
+  padding-bottom: 12px;
+}
+
+.settings-content.dark-mode .settings-header {
+  border-bottom-color: #444;
+}
+
+.settings-header h3 {
+  margin: 0;
+  color: var(--primary-color, #333);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.close-x-button {
+  background: transparent;
+  border: none;
+  color: #888;
+  font-size: 24px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 8px;
+  transition: color 0.2s ease;
+}
+
+.close-x-button:hover {
+  color: #333;
+}
+
+.settings-content.dark-mode .close-x-button {
+  color: #aaa;
+}
+
+.settings-content.dark-mode .close-x-button:hover {
+  color: #fff;
+}
+
+.settings-content.dark-mode h3 {
+  color: var(--primary-color, #e0e0e0);
+}
+
+/* Theme colors for different themes */
+.settings-content.purple-theme h3 {
+  color: #6200ea;
+}
+
+.settings-content.blue-theme h3 {
+  color: #1976d2;
+}
+
+.settings-content.green-theme h3 {
+  color: #388e3c;
+}
+
+/* Settings sections */
+.settings-section {
+  margin-bottom: 24px;
+  border-bottom: 1px solid #eaeaea;
+  padding-bottom: 18px;
+}
+
+.settings-section:last-of-type {
+  border-bottom: none;
+  margin-bottom: 16px;
+}
+
+.settings-content.dark-mode .settings-section {
+  border-bottom-color: #444;
+}
+
+.settings-section h4 {
+  margin-top: 5px;
+  margin-bottom: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #555;
+}
+
+.settings-content.dark-mode .settings-section h4 {
+  color: #aaa;
+}
+
+/* Individual setting items */
+.setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+  padding: 8px 0;
+}
+
+/* Theme color options */
+.theme-options {
+  display: flex;
+  gap: 12px;
+}
+
+.theme-option {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.theme-option:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.theme-option.selected {
+  border-color: #888;
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
+}
+
+.theme-option.default {
+  background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+}
+
+.theme-option.purple {
+  background: linear-gradient(135deg, #6200ea, #b388ff);
+}
+
+.theme-option.blue {
+  background: linear-gradient(135deg, #1976d2, #64b5f6);
+}
+
+.theme-option.green {
+  background: linear-gradient(135deg, #388e3c, #81c784);
+}
+
+/* Font size options */
+.font-size-options {
+  display: flex;
+  gap: 8px;
+}
+
+.font-size-options button {
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+
+.font-size-options button:hover {
+  background-color: #e8e8e8;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.font-size-options button.selected {
+  background-color: var(--primary-color, #4caf50);
+  color: white;
+  border-color: var(--primary-color, #4caf50);
+  transform: translateY(-2px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.settings-content.dark-mode .font-size-options button {
+  background-color: #3a3a3a;
+  border-color: #555;
+  color: #e0e0e0;
+}
+
+.settings-content.dark-mode .font-size-options button:hover {
+  background-color: #444;
+}
+
+/* Settings list for Chat Settings */
+.settings-list {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
-.settings-content li {
+.settings-list li {
+  margin: 12px 0;
+}
+
+.settings-button {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  color: var(--primary-color, #4caf50);
+  cursor: pointer;
+  padding: 8px;
+  text-align: left;
+  font-size: 15px;
+  width: 100%;
+  transition: all 0.3s ease;
+  border-radius: 6px;
+}
+
+.settings-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.settings-content.dark-mode .settings-button {
+  color: var(--primary-color, #81c784);
+}
+
+.settings-content.dark-mode .settings-button:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.settings-icon {
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+/* Settings dropdown */
+.settings-dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: white;
+  min-width: 250px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 8px;
+  z-index: 1;
+  border-radius: 6px;
+  margin-top: 5px;
+}
+
+.settings-content.dark-mode .dropdown-content {
+  background-color: #2a2a2a;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.settings-dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* About section */
+.about-content {
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.settings-content.dark-mode .about-content {
+  background-color: #333;
+}
+
+.about-content p {
   margin: 5px 0;
+  font-size: 14px;
 }
 
+.copyright {
+  font-size: 12px;
+  color: #777;
+}
+
+.settings-content.dark-mode .copyright {
+  color: #999;
+}
+
+/* Close button */
 .close-button {
-  margin-top: 10px;
-  background-color: #4caf50;
+  margin-top: 16px;
+  background-color: var(--primary-color, #4caf50);
   color: white;
   border: none;
-  border-radius: 4px;
-  padding: 6px 12px;
+  border-radius: 6px;
+  padding: 10px 16px;
   cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  font-size: 16px;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
+
 .close-button:hover {
+  background-color: var(--primary-color, #388e3c);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.close-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.purple-theme .close-button {
+  background-color: #6200ea;
+}
+
+.purple-theme .close-button:hover {
+  background-color: #7c4dff;
+}
+
+.blue-theme .close-button {
+  background-color: #1976d2;
+}
+
+.blue-theme .close-button:hover {
+  background-color: #2196f3;
+}
+
+.green-theme .close-button {
   background-color: #388e3c;
+}
+
+.green-theme .close-button:hover {
+  background-color: #4caf50;
 }

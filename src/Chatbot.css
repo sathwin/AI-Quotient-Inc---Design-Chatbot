@@ -1,9 +1,46 @@
-/* Chatbot.css */
+/* Chatbot.css - Mental Health Version */
 
+/* Base Container */
 .chatbot-container {
   position: relative;
   font-family: 'Roboto', sans-serif;
   color: #333;
+  transition: all 0.3s ease;
+}
+
+/* Dark Mode & Theme Classes */
+.chatbot-container.dark-mode {
+  color: #e0e0e0;
+}
+
+/* Global dark mode styles */
+body.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+/* Mental health theme variables */
+:root {
+  /* Default mental health theme (green) */
+  --default-primary: #4caf50;
+  --default-secondary: #81c784;
+  --default-accent: #2e7d32;
+  --default-light: #e8f5e9;
+  --default-dark: #1b5e20;
+  
+  /* Purple theme (for stress relief) */
+  --purple-primary: #9c27b0;
+  --purple-secondary: #ce93d8;
+  --purple-accent: #6a1b9a;
+  --purple-light: #f3e5f5;
+  --purple-dark: #4a148c;
+  
+  /* Blue theme (for calming) */
+  --blue-primary: #2196f3;
+  --blue-secondary: #90caf9;
+  --blue-accent: #0d47a1;
+  --blue-light: #e3f2fd;
+  --blue-dark: #0a3880;
 }
 
 /* Floating icon when minimized */
@@ -12,12 +49,39 @@
   bottom: 20px;
   right: 20px;
   cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 1000;
+  animation: gentlePulse 4s infinite;
 }
+
+/* Gentle pulse animation for chat icon */
+@keyframes gentlePulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(76, 175, 80, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+  }
+}
+
+/* Hover animation for chat icon */
+.chatbot-icon:hover {
+  transform: scale(1.1);
+  animation: none;
+}
+
 .chatbot-icon img {
   width: 70px;
   height: 70px;
   border-radius: 50%;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
 }
 
 /* Main chat window */
@@ -29,19 +93,99 @@
   position: fixed;
   bottom: 80px;
   right: 20px;
-  border-radius: 10px;
+  border-radius: 16px;
   background-color: #ffffff;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 1000;
-  border: 1px solid #ddd;
+  border: 1px solid #c8e6c9;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Dark Mode for Chat App */
+.chat-app.dark-mode {
+  background-color: #1a2e1a;
+  border-color: #2d392e;
+  color: #e0e0e0;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Mental Health Theme Classes */
+.chat-app.purple-theme {
+  --primary-color: var(--purple-primary);
+  --secondary-color: var(--purple-secondary);
+  --accent-color: var(--purple-accent);
+  border-color: var(--purple-light);
+}
+
+.chat-app.blue-theme {
+  --primary-color: var(--blue-primary);
+  --secondary-color: var(--blue-secondary);
+  --accent-color: var(--blue-accent);
+  border-color: var(--blue-light);
+}
+
+.chat-app.green-theme {
+  --primary-color: var(--default-primary);
+  --secondary-color: var(--default-secondary);
+  --accent-color: var(--default-accent);
+  border-color: var(--default-light);
+}
+
+/* Default theme */
+.chat-app {
+  --primary-color: var(--default-primary);
+  --secondary-color: var(--default-secondary);
+  --accent-color: var(--default-accent);
+}
+
+/* Font Size Options */
+.chat-app.font-small {
+  font-size: 0.85rem;
+}
+
+.chat-app.font-medium {
+  font-size: 1rem;
+}
+
+.chat-app.font-large {
+  font-size: 1.15rem;
+}
+
+/* High Contrast Mode */
+.chat-app.high-contrast {
+  --contrast-bg: #000;
+  --contrast-text: #fff;
+  --contrast-accent: #4caf50;
+  background-color: var(--contrast-bg);
+  color: var(--contrast-text);
+}
+
+.chat-app.high-contrast button {
+  background-color: var(--contrast-text) !important;
+  color: var(--contrast-bg) !important;
+  border: 2px solid var(--contrast-accent) !important;
 }
 
 /* Make it more responsive */
 @media (max-width: 600px) {
   .chat-app {
-    width: 90vw;
-    right: 5vw;
-    bottom: 20px;
+    width: 95vw;
+    right: 2.5vw;
+    bottom: 10px;
+    height: 80vh;
   }
 }
 
@@ -52,43 +196,217 @@
   right: 20px;
   width: clamp(300px, 40vw, 400px);
   background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 16px;
+  border: 1px solid #c8e6c9;
+  border-radius: 16px;
+  padding: 24px;
   z-index: 1000;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Dark Mode for avatar selection */
+.avatar-selection.dark-mode {
+  background-color: #1a2e1a;
+  border-color: #2d392e;
+  color: #e0e0e0;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .avatar-selection h3 {
-  margin: 0 0 10px 0;
+  margin: 0 0 16px 0;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  color: #2e7d32;
 }
+
+.dark-mode .avatar-selection h3 {
+  color: #81c784;
+}
+
 .avatar-grid {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  gap: 16px;
 }
+
 .avatar-option {
-  width: 60px;
-  height: 60px;
-  margin: 5px;
-  border: 2px solid transparent;
+  width: 80px;
+  height: 80px;
+  border: 3px solid transparent;
   border-radius: 50%;
   cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+/* Enhanced hover effects */
 .avatar-option:hover {
-  border-color: #0078d4;
+  transform: scale(1.1) rotate(5deg);
+  border-color: var(--primary-color);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
 /* Button to swap avatars once chat is open */
 .change-avatar-button {
   background-color: transparent;
   border: none;
-  color: #0078d4;
+  color: var(--primary-color);
   cursor: pointer;
   font-size: 14px;
   align-self: flex-end;
-  margin: 5px;
+  margin: 8px 12px;
+  padding: 4px 8px;
+  transition: all 0.3s ease;
+  border-radius: 4px;
 }
+
 .change-avatar-button:hover {
-  text-decoration: underline;
+  color: var(--accent-color);
+  background-color: rgba(76, 175, 80, 0.1);
+}
+
+.dark-mode .change-avatar-button:hover {
+  background-color: rgba(129, 199, 132, 0.1);
+}
+
+/* Input container */
+.input-container {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #c8e6c9;
+  padding: 8px;
+  background-color: #f9fff9;
+  transition: all 0.3s ease;
+}
+
+.dark-mode .input-container {
+  background-color: #1e2b1e;
+  border-top-color: #2d392e;
+}
+
+/* Updated styling for the gif button */
+.gif-button {
+  margin: 4px 8px;
+  background-color: var(--secondary-color, #81c784);
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-weight: 600;
+  color: #fff;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.gif-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  background-color: var(--accent-color, #2e7d32);
+}
+
+.dark-mode .gif-button {
+  color: #fff;
+  background-color: var(--primary-color, #4caf50);
+}
+
+.dark-mode .gif-button:hover {
+  background-color: var(--accent-color, #2e7d32);
+}
+
+/* Color-coded message status for mental health context */
+.status-normal {
+  /* Default style, no special styling needed */
+}
+
+.status-success {
+  background-color: rgba(76, 175, 80, 0.15) !important;
+  border-left: 4px solid #4CAF50 !important;
+}
+
+.status-error {
+  background-color: rgba(244, 67, 54, 0.15) !important;
+  border-left: 4px solid #F44336 !important;
+}
+
+.status-warning {
+  background-color: rgba(255, 152, 0, 0.15) !important;
+  border-left: 4px solid #FF9800 !important;
+}
+
+.status-info {
+  background-color: rgba(33, 150, 243, 0.15) !important;
+  border-left: 4px solid #2196F3 !important;
+}
+
+/* Make the dark mode status indicators more visible */
+.dark-mode .status-success {
+  background-color: rgba(76, 175, 80, 0.25) !important;
+}
+
+.dark-mode .status-error {
+  background-color: rgba(244, 67, 54, 0.25) !important;
+}
+
+.dark-mode .status-warning {
+  background-color: rgba(255, 152, 0, 0.25) !important;
+}
+
+.dark-mode .status-info {
+  background-color: rgba(33, 150, 243, 0.25) !important;
+}
+
+/* Animations for new messages */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message-new {
+  animation: fadeInUp 0.4s ease-out forwards;
+}
+
+/* Mental health message list style */
+.message-list {
+  background-color: #f5fbf5 !important;
+}
+
+.dark-mode .message-list {
+  background-color: #1a2e1a !important;
+}
+
+/* Mental health styling for message bubbles */
+.message-row.user .message-bubble {
+  background-color: #4caf50;
+}
+
+.message-row.bot .message-bubble {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.dark-mode .message-row.user .message-bubble {
+  background-color: #2e7d32;
+}
+
+.dark-mode .message-row.bot .message-bubble {
+  background-color: #263228;
+  color: #a5d6a7;
 }

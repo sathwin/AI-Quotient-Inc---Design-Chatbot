@@ -1,29 +1,97 @@
 .typing-indicator {
-    display: flex;
-    align-items: center;
-    margin: 10px;
-    color: #555;
-    font-style: italic;
+  display: flex;
+  align-items: center;
+  margin: 10px;
+  color: #555;
+  font-style: italic;
+  border-radius: 18px;
+  background-color: #f1f1f1;
+  padding: 8px 16px;
+  width: max-content;
+  animation: fadeIn 0.3s ease-in;
+  transition: all 0.3s ease;
+}
+
+/* Dark mode support */
+.typing-indicator.dark-mode {
+  background-color: #2d2d2d;
+  color: #e0e0e0;
+}
+
+/* Theme specific colors */
+.typing-indicator.purple-theme {
+  background-color: rgba(98, 0, 234, 0.1);
+}
+
+.typing-indicator.blue-theme {
+  background-color: rgba(25, 118, 210, 0.1);
+}
+
+.typing-indicator.green-theme {
+  background-color: rgba(56, 142, 60, 0.1);
+}
+
+.typing-dots {
+  display: flex;
+  margin-right: 8px;
+}
+
+.typing-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #888;
+  border-radius: 50%;
+  margin-right: 4px;
+  animation: typing 1.2s infinite ease-in-out;
+}
+
+/* Offset the animations for a wave effect */
+.typing-dot:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+/* Theme specific dot colors */
+.typing-indicator.purple-theme .typing-dot {
+  background-color: #6200ea;
+}
+
+.typing-indicator.blue-theme .typing-dot {
+  background-color: #1976d2;
+}
+
+.typing-indicator.green-theme .typing-dot {
+  background-color: #388e3c;
+}
+
+/* Dark mode dot colors */
+.typing-indicator.dark-mode .typing-dot {
+  background-color: #aaa;
+}
+
+/* Typing bounce animation */
+@keyframes typing {
+  0%, 100% {
+    transform: translateY(0);
   }
-  
-  .typing-dot {
-    width: 6px;
-    height: 6px;
-    background-color: #888;
-    border-radius: 50%;
-    margin-right: 4px;
-    animation: typing 1s infinite ease-in-out;
+  50% {
+    transform: translateY(-10px);
   }
-  
-  @keyframes typing {
-    0% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-6px);
-    }
-    100% {
-      transform: translateY(0);
-    }
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  
+  to {
+    opacity: 1;
+  }
+}

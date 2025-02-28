@@ -1,21 +1,139 @@
 .predefined-options {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin: 10px;
+  gap: 10px;
+  margin: 12px;
   justify-content: center;
+  animation: fadeInUp 0.4s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .option-button {
-  background-color: #4caf50;
-  color: white;
-  border: none;
+  background-color: #f0f8ff;
+  color: #2e7d32;
+  border: 1px solid #c8e6c9;
   border-radius: 20px;
-  padding: 6px 12px;
+  padding: 8px 16px;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.option-icon {
+  margin-right: 8px;
+  font-size: 1.2rem;
 }
 
 .option-button:hover {
-  background-color: #388e3c;
+  background-color: #e8f5e9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-color: #4caf50;
+}
+
+.option-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark mode styles */
+.predefined-options.dark-mode .option-button {
+  background-color: #263238;
+  color: #81c784;
+  border-color: #2c5f2d;
+}
+
+.predefined-options.dark-mode .option-button:hover {
+  background-color: #2d3b40;
+  border-color: #4caf50;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Different colors for different types of options */
+/* Appointment buttons */
+.option-button:has(.option-icon:first-child:contains('📅')) {
+  background-color: #e3f2fd;
+  border-color: #bbdefb;
+  color: #1565c0;
+}
+
+.option-button:has(.option-icon:first-child:contains('📅')):hover {
+  background-color: #bbdefb;
+  border-color: #64b5f6;
+}
+
+/* Anxiety/stress buttons */
+.option-button:has(.option-icon:first-child:contains('😰')),
+.option-button:has(.option-icon:first-child:contains('🧘')),
+.option-button:has(.option-icon:first-child:contains('😔')) {
+  background-color: #f1f8e9;
+  border-color: #dcedc8;
+  color: #33691e;
+}
+
+.option-button:has(.option-icon:first-child:contains('😰')):hover,
+.option-button:has(.option-icon:first-child:contains('🧘')):hover,
+.option-button:has(.option-icon:first-child:contains('😔')):hover {
+  background-color: #dcedc8;
+  border-color: #aed581;
+}
+
+/* Emergency buttons */
+.option-button:has(.option-icon:first-child:contains('🆘')) {
+  background-color: #ffebee;
+  border-color: #ffcdd2;
+  color: #c62828;
+}
+
+.option-button:has(.option-icon:first-child:contains('🆘')):hover {
+  background-color: #ffcdd2;
+  border-color: #ef9a9a;
+}
+
+/* Dark mode adjustments for different button types */
+.predefined-options.dark-mode .option-button:has(.option-icon:first-child:contains('📅')) {
+  background-color: #0d2b45;
+  border-color: #1565c0;
+  color: #64b5f6;
+}
+
+.predefined-options.dark-mode .option-button:has(.option-icon:first-child:contains('😰')),
+.predefined-options.dark-mode .option-button:has(.option-icon:first-child:contains('🧘')),
+.predefined-options.dark-mode .option-button:has(.option-icon:first-child:contains('😔')) {
+  background-color: #1b2a1b;
+  border-color: #33691e;
+  color: #aed581;
+}
+
+.predefined-options.dark-mode .option-button:has(.option-icon:first-child:contains('🆘')) {
+  background-color: #3e2424;
+  border-color: #c62828;
+  color: #ef9a9a;
+}
+
+/* Responsive adjustment for smaller screens */
+@media (max-width: 500px) {
+  .option-button {
+    font-size: 0.85rem;
+    padding: 6px 12px;
+    flex-grow: 1;
+  }
+  
+  .predefined-options {
+    gap: 8px;
+    margin: 8px;
+  }
 }

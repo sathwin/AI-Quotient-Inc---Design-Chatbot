@@ -1,76 +1,290 @@
+/* Chat Input Container - Mental Health Theme */
+.chat-input-container {
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+/* Reply indicator */
+.reply-indicator {
+  padding: 8px 16px;
+  background-color: rgba(76, 175, 80, 0.1);
+  border-bottom: 1px solid #e8f5e9;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dark-mode .reply-indicator {
+  background-color: rgba(76, 175, 80, 0.1);
+  border-bottom: 1px solid #2d392e;
+}
+
+.reply-text {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: #4caf50;
+  font-style: italic;
+}
+
+.dark-mode .reply-text {
+  color: #81c784;
+}
+
+.cancel-reply {
+  background: none;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 2px 5px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.cancel-reply:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #666;
+}
+
+.dark-mode .cancel-reply:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
 /* Chat Input Bar */
 .chat-input {
   display: flex;
   align-items: center;
-  padding: 8px;
-  border-top: 1px solid #ddd;
-  background-color: #ffffff;
+  padding: 8px 12px;
+  border-top: 1px solid #e8f5e9;
+  background-color: #f9fff9;
   width: 100%; /* Ensure it spans the full width */
-  gap: 6px; /* Adds spacing between elements */
+  gap: 8px; /* Adds spacing between elements */
+  transition: all 0.3s ease;
+}
+
+/* Dark mode support */
+.chat-input-container.dark-mode .chat-input {
+  background-color: #1e2b1e;
+  border-top-color: #2d392e;
+  color: #e0e0e0;
+}
+
+/* Theme variables with mental health colors */
+.chat-input-container {
+  --primary-color: #4caf50;
+  --primary-hover: #388e3c;
+  --primary-light: rgba(76, 175, 80, 0.1);
+  --secondary-color: #81c784;
+  --accent-color: #2e7d32;
+}
+
+/* Purple theme for mental health (stress relief) */
+.chat-input-container.purple-theme {
+  --primary-color: #9c27b0;
+  --primary-hover: #7b1fa2;
+  --primary-light: rgba(156, 39, 176, 0.1);
+  --secondary-color: #ce93d8;
+  --accent-color: #6a1b9a;
+}
+
+/* Blue theme for mental health (calming) */
+.chat-input-container.blue-theme {
+  --primary-color: #2196f3;
+  --primary-hover: #1976d2;
+  --primary-light: rgba(33, 150, 243, 0.1);
+  --secondary-color: #90caf9;
+  --accent-color: #0d47a1;
 }
 
 /* Make the input field expand to fill available space */
-.chat-input input {
+.chat-input textarea {
   flex-grow: 1; /* Expands to take all available space */
-  padding: 10px;
+  padding: 12px;
   font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  border: 1px solid #c8e6c9;
+  border-radius: 24px;
   outline: none;
+  transition: all 0.3s ease;
+  resize: none;
+  max-height: 120px;
+  font-family: inherit;
+  line-height: 1.4;
+  background-color: #fff;
+}
+
+.chat-input textarea:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px var(--primary-light);
+}
+
+/* Visual feedback when input has content */
+.chat-input textarea.has-content {
+  border-color: var(--primary-color);
+}
+
+/* Dark mode input styling */
+.chat-input-container.dark-mode .chat-input textarea {
+  background-color: #263228;
+  border-color: #2d392e;
+  color: #e0e0e0;
+}
+
+.chat-input-container.dark-mode .chat-input textarea::placeholder {
+  color: #a5d6a7;
+  opacity: 0.6;
 }
 
 /* Emoji Button */
 .emoji-button {
   background: none;
   border: none;
-  font-size: 24px;
+  font-size: 20px;
   cursor: pointer;
-  padding: 10px;
+  padding: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.2s ease;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
 }
 
-/* Send and GIF Buttons */
-.send-button, .gif-button {
-  padding: 10px 16px;
-  font-size: 16px;
-  cursor: pointer;
-  border: none;
-  border-radius: 6px;
+.emoji-button:hover {
+  transform: scale(1.1);
+  background-color: rgba(76, 175, 80, 0.1);
+}
+
+.chat-input-container.dark-mode .emoji-button:hover {
+  background-color: rgba(76, 175, 80, 0.2);
+}
+
+/* Emoji picker container */
+.emoji-picker-container {
+  position: absolute;
+  bottom: 80px;
+  left: 10px;
+  z-index: 10;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  animation: fadeIn 0.3s ease;
+  background-color: white;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.chat-input-container.dark-mode .emoji-picker-container {
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+  background-color: #333;
+}
+
+.emoji-picker-header {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
+  padding: 8px 12px;
+  background-color: #e8f5e9;
+  border-bottom: 1px solid #c8e6c9;
+}
+
+.emoji-picker-header button {
+  background: none;
+  border: none;
+  color: #4caf50;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 2px 5px;
+}
+
+.chat-input-container.dark-mode .emoji-picker-header {
+  background-color: #1e2b1e;
+  border-bottom: 1px solid #2d392e;
+  color: #a5d6a7;
 }
 
 /* Send Button */
 .send-button {
-  background-color: #28a745;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--primary-color);
   color: white;
+  transition: all 0.3s ease;
+  padding: 0;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.send-icon {
+  font-size: 18px;
+  transition: transform 0.2s ease;
 }
 
 .send-button:hover {
-  background-color: #218838;
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }
 
-/* GIF Button */
-.gif-button {
-  background-color: #ffc107;
-  color: black;
-  min-width: 60px;
+.send-button:hover .send-icon {
+  transform: translateY(-2px);
 }
 
-.gif-button:hover {
-  background-color: #e0a800;
+.send-button:active {
+  transform: translateY(0);
 }
 
-/* Responsive Fix */
-@media (max-width: 600px) {
-  .chat-input {
-    flex-wrap: nowrap; /* Keep items in a row */
+/* Visual feedback when button is clicked */
+.send-button.button-flash {
+  animation: buttonFlash 0.3s ease;
+}
+
+@keyframes buttonFlash {
+  0% {
+    transform: scale(1);
   }
-
-  .send-button, .gif-button {
-    min-width: 60px;
+  50% {
+    transform: scale(0.95);
   }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Disabled button state */
+.send-button:disabled {
+  background-color: #c8e6c9;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.chat-input-container.dark-mode .send-button:disabled {
+  background-color: #2d392e;
 }
