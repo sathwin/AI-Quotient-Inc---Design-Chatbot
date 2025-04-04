@@ -9,7 +9,12 @@ import TypingIndicator from './components/TypingIndicator';
 import WelcomeScreen from './components/WelcomeScreen';
 import FileAttachmentUI from './components/FileAttachmentUI';
 import VoiceInput from './components/VoiceInput';
+import AuthScreen from './components/AuthScreen';
 import './Chatbot.css';
+// Import OpenAI service
+import { getAIResponse } from './services/openaiService';
+// Import user verification functions
+import { verifyUser } from './data/mockUserData';
 
 // Create Theme Context to share theme state across components
 export const ThemeContext = createContext();
@@ -36,12 +41,17 @@ function Chatbot() {
   const [attachedFiles, setAttachedFiles] = useState([]);
   const [voiceTranscript, setVoiceTranscript] = useState('');
   const [voiceInputStatus, setVoiceInputStatus] = useState('idle');
-
-  // Sprint 8: Theme State
+  // Theme State
   const [darkMode, setDarkMode] = useState(false);
   const [theme, setTheme] = useState('default');
   const [fontSize, setFontSize] = useState('medium');
   const [highContrast, setHighContrast] = useState(false);
+  
+  // Authentication state
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [showAuthScreen, setShowAuthScreen] = useState(false);
+  const [authenticatedUser, setAuthenticatedUser] = useState(null);
+  const [authError, setAuthError] = useState('');
 
   // Load user preferences from localStorage
   useEffect(() => {
@@ -55,18 +65,30 @@ function Chatbot() {
         console.error('Error loading chat history:', e);
       }
     }
-
+    
+    // Load authentication state
+    const savedUser = localStorage.getItem('authenticatedUser');
+    if (savedUser) {
+      try {
+        const user = JSON.parse(savedUser);
+        setAuthenticatedUser(user);
+        setIsAuthenticated(true);
+        // If we have a saved user, skip auth screen
+        setShowAuthScreen(false);
+      } catch (e) {
+        console.error('Error loading authenticated user:', e);
+      }
+    }
+    
     // Load theme preferences
     const savedDarkMode = localStorage.getItem('darkMode') === 'true';
     const savedTheme = localStorage.getItem('theme') || 'default';
     const savedFontSize = localStorage.getItem('fontSize') || 'medium';
     const savedHighContrast = localStorage.getItem('highContrast') === 'true';
-
     setDarkMode(savedDarkMode);
     setTheme(savedTheme);
     setFontSize(savedFontSize);
     setHighContrast(savedHighContrast);
-
     // Apply dark mode to document body if it's enabled
     if (savedDarkMode) {
       document.body.classList.add('dark-mode');
@@ -80,20 +102,25 @@ function Chatbot() {
     }
   }, [messages]);
 
+  // Save authenticated user to localStorage when it changes
+  useEffect(() => {
+    if (authenticatedUser) {
+      localStorage.setItem('authenticatedUser', JSON.stringify(authenticatedUser));
+    }
+  }, [authenticatedUser]);
+
   // Save preferences and apply body class when they change
   useEffect(() => {
     localStorage.setItem('darkMode', darkMode);
     localStorage.setItem('theme', theme);
     localStorage.setItem('fontSize', fontSize);
     localStorage.setItem('highContrast', highContrast);
-
     // Apply dark mode to document body
     if (darkMode) {
       document.body.classList.add('dark-mode');
     } else {
       document.body.classList.remove('dark-mode');
     }
-
     // Apply theme to document body
     document.body.className = document.body.className
       .replace(/\b\w+-theme\b/g, '')
@@ -119,12 +146,60 @@ function Chatbot() {
     'I\'m having trouble sleeping'
   ];
 
+  // Handle authentication
+  const handleAuthenticate = (name, phone) => {
+    const user = verifyUser(name, phone);
+    
+    if (user) {
+      setAuthenticatedUser(user);
+      setIsAuthenticated(true);
+      setShowAuthScreen(false);
+      setAuthError('');
+      
+      // Add a welcome message
+      const welcomeMessage = {
+        id: Date.now(),
+        text: `Welcome back, ${user.name.split(' ')[0]}! I'm here to support you. How are you feeling today?`,
+        sender: 'bot',
+        timestamp: new Date().toLocaleTimeString(),
+        avatarUrl: null,
+        status: 'success',
+        isNew: true
+      };
+      
+      setMessages(prev => [...prev, welcomeMessage]);
+      
+      // Remove isNew flag after animation
+      setTimeout(() => {
+        setMessages(prev => 
+          prev.map(m => m.id === welcomeMessage.id ? {...m, isNew: false} : m)
+        );
+      }, 500);
+    } else {
+      setAuthError('Invalid credentials. Please try again.');
+    }
+  };
+
   // Start a new chat with options
   const handleStartChat = (initialMessage = '') => {
     setShowWelcomeScreen(false);
-    if (initialMessage) {
+    
+    // If not authenticated, show auth screen
+    if (!isAuthenticated) {
+      setShowAuthScreen(true);
+    } else if (initialMessage) {
       handleSend(initialMessage);
     }
+  };
+
+  // Handle logout
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setAuthenticatedUser(null);
+    setMessages([]);
+    localStorage.removeItem('authenticatedUser');
+    localStorage.removeItem('chatbot_messages');
+    setShowWelcomeScreen(true);
   };
 
   // Clear chat history
@@ -234,16 +309,16 @@ function Chatbot() {
     }, 500);
   };
 
-  // Send a message (text or GIF)
-  const handleSend = (msg, isGif = false, status = 'normal') => {
-    if ((!msg.trim() && !isGif) || botIsTyping) return;
-
+  // Send a message - UPDATED to include authenticated user data
+  const handleSend = async (msg, status = 'normal') => {
+    if (!msg.trim() || botIsTyping) return;
+    
     // Handle appointment scheduling request
     if (msg.toLowerCase().includes('schedule') && msg.toLowerCase().includes('appointment')) {
       handleScheduleAppointment();
       return;
     }
-
+    
     // Create user's message object
     const userMessage = {
       id: Date.now(),
@@ -252,9 +327,8 @@ function Chatbot() {
       timestamp: new Date().toLocaleTimeString(),
       avatarUrl: selectedAvatar,
       parentId: replyToMessageId || null,
-      isGif,
-      status, // Sprint 7: Added status for color-coded messages
-      isNew: true, // Sprint 7: For animation
+      status, // Added status for color-coded messages
+      isNew: true, // For animation
       attachments: attachedFiles.length > 0 ? [...attachedFiles] : null
     };
     
@@ -262,121 +336,87 @@ function Chatbot() {
     setReplyToMessageId(null); // reset
     setAttachedFiles([]); // clear attachments after sending
     setMessage(''); // clear input
-
+    
     // After a brief delay, remove the "new" flag to stop animation
     setTimeout(() => {
       setMessages(prev => 
         prev.map(m => m.id === userMessage.id ? {...m, isNew: false} : m)
       );
     }, 500);
-
-    // If it's not a GIF, let the bot respond
-    if (!isGif) {
-      // Show quick replies if greeting
-      if (['hi', 'hello', 'hey'].includes(msg.toLowerCase())) {
+    
+    // Show quick replies if greeting
+    if (['hi', 'hello', 'hey'].includes(msg.toLowerCase())) {
+      setShowOptions(true);
+    } else {
+      setShowOptions(false);
+    }
+    
+    // Start typing simulation
+    setBotIsTyping(true);
+    
+    try {
+      // Get the AI response - pass authenticated user if available
+      const aiResponse = await getAIResponse(msg, messages, authenticatedUser);
+      
+      setBotIsTyping(false);
+      
+      // Create bot message with the AI response
+      const botMessage = {
+        id: Date.now() + 2,
+        text: aiResponse.text,
+        sender: 'bot',
+        timestamp: new Date().toLocaleTimeString(),
+        avatarUrl: null,
+        parentId: null,
+        status: aiResponse.status,
+        isNew: true
+      };
+      
+      setMessages(prev => [...prev, botMessage]);
+      
+      // Check if we should show suggested options based on keywords
+      let shouldShowOptions = false;
+      const keywords = ['anxious', 'anxiety', 'stress', 'sleep', 'sad', 'depressed', 'depression', 'appointment'];
+      keywords.forEach(keyword => {
+        if (aiResponse.text.toLowerCase().includes(keyword)) {
+          shouldShowOptions = true;
+        }
+      });
+      
+      if (shouldShowOptions) {
         setShowOptions(true);
-        // Start typing animation
-        setBotIsTyping(true);
-        setTimeout(() => {
-          setBotIsTyping(false);
-          const greetBotMessage = {
-            id: Date.now() + 1,
-            text: "Hello! I'm your mental health assistant. How are you feeling today? I'm here to help you schedule appointments, provide coping strategies, or just listen if you need someone to talk to.",
-            sender: 'bot',
-            timestamp: new Date().toLocaleTimeString(),
-            avatarUrl: null,
-            parentId: null,
-            isGif: false,
-            status: 'success', // Sprint 7: Added status
-            isNew: true // Sprint 7: For animation
-          };
-          setMessages(prev => [...prev, greetBotMessage]);
-          
-          // Remove isNew flag after animation
-          setTimeout(() => {
-            setMessages(prev => 
-              prev.map(m => m.id === greetBotMessage.id ? {...m, isNew: false} : m)
-            );
-          }, 500);
-        }, 1000);
-        return;
-      } else {
-        setShowOptions(false);
       }
-
-      // Start typing simulation
-      setBotIsTyping(true);
+      
+      // Remove isNew flag after animation
       setTimeout(() => {
-        setBotIsTyping(false);
-
-        let botResponse = '';
-        let status = 'normal';
-        let suggestedOptions = null;
-
-        // Mental health focused responses
-        if (msg.toLowerCase().includes('anxious') || msg.toLowerCase().includes('anxiety')) {
-          botResponse = "I'm sorry to hear you're feeling anxious. Anxiety is a common experience, and there are several strategies that might help. Would you like to try a breathing exercise, schedule an appointment with a therapist, or learn about grounding techniques?";
-          status = 'info';
-          suggestedOptions = ['Try a breathing exercise', 'Schedule an appointment', 'Learn about grounding techniques'];
-        } 
-        else if (msg.toLowerCase().includes('stress') || msg.toLowerCase().includes('stressed')) {
-          botResponse = "I understand that stress can be challenging. Would you like to try a quick stress relief activity, learn about stress management techniques, or schedule an appointment to discuss your stress with a professional?";
-          status = 'info';
-          suggestedOptions = ['Quick stress relief', 'Stress management tips', 'Schedule an appointment'];
-        } 
-        else if (msg.toLowerCase().includes('sleep') || msg.toLowerCase().includes('insomnia')) {
-          botResponse = "Sleep difficulties can be frustrating. Would you like some tips for better sleep hygiene, a guided sleep meditation, or to schedule an appointment with a sleep specialist?";
-          status = 'info';
-          suggestedOptions = ['Sleep hygiene tips', 'Guided sleep meditation', 'See a sleep specialist'];
-        } 
-        else if (msg.toLowerCase().includes('sad') || msg.toLowerCase().includes('depressed') || msg.toLowerCase().includes('depression')) {
-          botResponse = "I'm sorry you're feeling this way. It's important to take these feelings seriously. Would you like to talk more about what you're experiencing, try some mood-lifting activities, or connect with a mental health professional?";
-          status = 'warning';
-          suggestedOptions = ['Talk more', 'Mood-lifting activities', 'Connect with a professional'];
-        } 
-        else if (msg.toLowerCase().includes('appointment') || msg.toLowerCase().includes('schedule') || msg.toLowerCase().includes('doctor')) {
-          botResponse = "I can help you schedule an appointment. We have several mental health professionals available. Would you prefer to see a therapist, psychiatrist, or counselor? And do you have a preference for in-person or virtual appointments?";
-          status = 'success';
-          suggestedOptions = ['Therapist (in-person)', 'Therapist (virtual)', 'Psychiatrist', 'Counselor'];
-        } 
-        else if (msg.toLowerCase().includes('emergency') || msg.toLowerCase().includes('crisis') || msg.toLowerCase().includes('suicidal')) {
-          botResponse = "If you're experiencing a mental health emergency or having thoughts of harming yourself, please call the National Suicide Prevention Lifeline at 988 or text HOME to 741741 to reach the Crisis Text Line. These services are available 24/7. Would you like me to provide additional crisis resources?";
-          status = 'error';
-          suggestedOptions = ['Yes, provide more resources', 'No, thank you'];
-        } 
-        else {
-          botResponse = "Thank you for sharing. How else can I support you today? I can help with scheduling appointments, provide coping strategies for stress or anxiety, or just be here to listen.";
-          status = 'normal';
-          suggestedOptions = ['Schedule appointment', 'Coping strategies', 'Just listen'];
-        }
-
-        // Bot response
-        const botMessage = {
-          id: Date.now() + 2,
-          text: botResponse,
-          sender: 'bot',
-          timestamp: new Date().toLocaleTimeString(),
-          avatarUrl: null,
-          parentId: null,
-          isGif: false,
-          status, // Sprint 7: Added status
-          isNew: true, // Sprint 7: For animation
-          suggestedOptions // Add suggested quick replies if any
-        };
-        setMessages(prev => [...prev, botMessage]);
-        
-        // If there are suggested options, show them
-        if (suggestedOptions) {
-          setShowOptions(true);
-        }
-        
-        // Remove isNew flag after animation
-        setTimeout(() => {
-          setMessages(prev => 
-            prev.map(m => m.id === botMessage.id ? {...m, isNew: false} : m)
-          );
-        }, 500);
-      }, 1500);
+        setMessages(prev => 
+          prev.map(m => m.id === botMessage.id ? {...m, isNew: false} : m)
+        );
+      }, 500);
+    } catch (error) {
+      console.error('Error getting AI response:', error);
+      setBotIsTyping(false);
+      
+      // Handle the error by showing an error message
+      const errorMessage = {
+        id: Date.now() + 2,
+        text: "I'm sorry, I'm having trouble processing your request right now. Please try again later.",
+        sender: 'bot',
+        timestamp: new Date().toLocaleTimeString(),
+        avatarUrl: null,
+        parentId: null,
+        status: 'error',
+        isNew: true
+      };
+      
+      setMessages(prev => [...prev, errorMessage]);
+      
+      // Remove isNew flag after animation
+      setTimeout(() => {
+        setMessages(prev => 
+          prev.map(m => m.id === errorMessage.id ? {...m, isNew: false} : m)
+        );
+      }, 500);
     }
   };
 
@@ -394,33 +434,6 @@ function Chatbot() {
     if (replyToMessage) {
       document.getElementById('chat-input').focus();
       setMessage(`Replying to: "${replyToMessage.text.substring(0, 30)}${replyToMessage.text.length > 30 ? '...' : ''}" \n`);
-    }
-  };
-
-  // Giphy fetch for calm/relaxing GIFs
-  const handleSendGif = async () => {
-    try {
-      setBotIsTyping(true);
-      const tags = ['calm', 'relax', 'meditation', 'peaceful', 'nature'];
-      const randomTag = tags[Math.floor(Math.random() * tags.length)];
-      
-      const res = await fetch(
-        `https://api.giphy.com/v1/gifs/random?api_key=cXhUvyyVPhxzTVwpGvyw3vSCVtEhCyRO&tag=${randomTag}`
-      );
-      const data = await res.json();
-      setBotIsTyping(false);
-
-      if (data?.data?.images?.original?.url) {
-        const gifUrl = data.data.images.original.url;
-        handleSend(gifUrl, true, 'success');
-      } else {
-        // If no GIF found
-        handleSend('No calming GIF found, sorry!', false, 'error');
-      }
-    } catch (error) {
-      setBotIsTyping(false);
-      console.error('GIF fetch error:', error);
-      handleSend('Error fetching GIF', false, 'error');
     }
   };
 
@@ -461,15 +474,12 @@ function Chatbot() {
   const toggleDarkMode = () => {
     setDarkMode(prevDarkMode => !prevDarkMode);
   };
-
   const changeTheme = (newTheme) => {
     setTheme(newTheme);
   };
-
   const changeFontSize = (newSize) => {
     setFontSize(newSize);
   };
-
   const toggleHighContrast = () => {
     setHighContrast(!highContrast);
   };
@@ -573,13 +583,18 @@ function Chatbot() {
               avatarUrl={selectedAvatar}
               onExport={handleExportChat}
               onClearHistory={handleClearHistory}
+              isAuthenticated={isAuthenticated}
+              userName={authenticatedUser ? authenticatedUser.name : ''}
+              onLogout={handleLogout}
             />
             <button className="change-avatar-button" onClick={handleBackToAvatarSelection}>
               Change Avatar
             </button>
 
-            {/* Welcome Screen */}
-            {showWelcomeScreen ? (
+            {/* Authentication Screen */}
+            {showAuthScreen ? (
+              <AuthScreen onAuthenticate={handleAuthenticate} />
+            ) : showWelcomeScreen ? (
               <WelcomeScreen onStart={handleStartChat} />
             ) : (
               <>
@@ -610,7 +625,7 @@ function Chatbot() {
                   />
                 )}
 
-                {/* Input container with file attachments, voice input, and gif button */}
+                {/* Input container with file attachments and voice input */}
                 <div className="input-container">
                   {/* File attachments UI */}
                   <FileAttachmentUI
@@ -636,15 +651,6 @@ function Chatbot() {
                     cancelReply={() => setReplyToMessageId(null)}
                     id="chat-input"
                   />
-                  
-                  {/* GIF button */}
-                  <button
-                    className="gif-button"
-                    onClick={handleSendGif}
-                    aria-label="Send calming GIF"
-                  >
-                    GIF
-                  </button>
                 </div>
               </>
             )}
@@ -655,6 +661,8 @@ function Chatbot() {
                 onClose={handleSettingsClose}
                 onExport={handleExportChat}
                 onClearHistory={handleClearHistory}
+                onLogout={handleLogout}
+                isAuthenticated={isAuthenticated}
               />
             }
           </div>

@@ -1,0 +1,157 @@
+.auth-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background: linear-gradient(135deg, #64b5f6, #1976d2);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  
+  .auth-container {
+    background-color: white;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .auth-container h2 {
+    color: #333;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  .auth-container p {
+    color: #666;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #555;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+  }
+  
+  .form-group input:focus {
+    border-color: #1976d2;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+  }
+  
+  .auth-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #1976d2;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .auth-button:hover {
+    background-color: #1565c0;
+  }
+  
+  .auth-button:disabled {
+    background-color: #90caf9;
+    cursor: not-allowed;
+  }
+  
+  .error-message {
+    color: #d32f2f;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+  }
+  
+  .test-credentials {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    font-size: 0.85rem;
+    color: #777;
+  }
+  
+  .test-credentials p {
+    margin: 5px 0;
+    text-align: left;
+  }
+  
+  /* Dark mode support */
+  .dark-mode .auth-container {
+    background-color: #333;
+  }
+  
+  .dark-mode .auth-container h2,
+  .dark-mode .form-group label {
+    color: #f0f0f0;
+  }
+  
+  .dark-mode .auth-container p {
+    color: #ccc;
+  }
+  
+  .dark-mode .form-group input {
+    background-color: #444;
+    border-color: #555;
+    color: #f0f0f0;
+  }
+  
+  .dark-mode .test-credentials {
+    border-top-color: #555;
+    color: #bbb;
+  }
+  
+  /* High contrast mode support */
+  .high-contrast .auth-container {
+    background-color: black;
+  }
+  
+  .high-contrast .auth-container h2,
+  .high-contrast .form-group label,
+  .high-contrast .auth-container p {
+    color: white;
+  }
+  
+  .high-contrast .form-group input {
+    background-color: black;
+    border-color: white;
+    color: white;
+  }
+  
+  .high-contrast .auth-button {
+    background-color: white;
+    color: black;
+  }
+  
+  .high-contrast .auth-button:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .high-contrast .auth-button:disabled {
+    background-color: #555;
+    color: #ddd;
+  }
+  
+  .high-contrast .error-message {
+    color: #ff6b6b;
+  }
