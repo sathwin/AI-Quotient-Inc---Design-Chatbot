@@ -1,0 +1,25 @@
+# Dependencies
+node_modules
+npm-debug.log
+
+# Build output
+build
+
+# Git
+.git
+.gitignore
+
+# Environment variables and secrets
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# IDE settings
+.idea
+.vscode
+
+# Misc
+.DS_Store
+*.log
